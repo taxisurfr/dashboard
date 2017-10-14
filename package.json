@@ -1,38 +1,39 @@
 {
-  "name": "nodejs-ex",
-  "version": "0.0.1",
-  "description": "Node.js sample app for OpenShift 3",
-  "main": "server.js",
+  "name": "my_first_app",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "react-scripts": "0.7.0"
+  },
   "dependencies": {
     "chai": "^3.5.0",
     "chai-http": "^2.0.1",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
     "mocha": "^2.4.5",
-    "mongodb": "^2.1.16",
     "morgan": "^1.7.0",
-    "object-assign": "4.1.0"
-  },
-  "engine": {
-    "node": "*",
-    "npm": "*"
-  },
-  "engines": {
-    "node": ">= 6.7.0",
-    "npm": ">= 5.4.2"
+    "object-assign": "4.1.0",
+    "faker": "^3.1.0",
+    "fakir": "0.0.2",
+    "fixed-data-table": "^0.6.3",
+    "muicss": "^0.9.16",
+    "react": "^15.4.1",
+    "react-bootstrap": "^0.31.0",
+    "react-button": "^1.2.1",
+    "react-dom": "^15.4.1",
+    "react-http-request": "^1.0.2",
+    "react-intl": "^2.2.2",
+    "react-redux": "^5.0.1",
+    "react-router": "^3.0.0",
+    "redux": "latest",
+    "redux-logger": "latest",
+    "redux-thunk": "latest"
   },
   "scripts": {
-    "start": "node server.js",
-    "test": "IP=0.0.0.0 PORT=3030 mocha --timeout 5000 tests/*_test.js"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   },
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/openshift/nodejs-ex.git"
-  },
-  "author": "Steve Speicher <sspeiche@gmail.com>",
-  "license": "CC-BY-1.0",
-  "bugs": {
-    "url": "http://github.com/openshift/nodejs-ex/issues"
-  },
-  "homepage": "http://github.com/openshift/nodejs-ex"
+  "main": ".openshift/server.js"
 }
