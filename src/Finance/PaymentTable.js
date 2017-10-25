@@ -1,16 +1,9 @@
-var TableStore = require('./../util/TableStore');
-var FixedDataTable = require('fixed-data-table');
-import React, {PropTypes} from 'react'
-import Button from 'react-button';
 import {FormattedNumber} from 'react-intl';
-
-// var IntlMixin     = ReactIntl.IntlMixin;
+import React from 'react'
 import {FormattedDate} from 'react-intl';
-/*
-import {AmtCell} from './SummaryTable';
-*/
 
-const {Table, Column, ColumnGroup, Cell} = FixedDataTable;
+import {Table, Column, Cell} from 'fixed-data-table';
+import '../fixed-data-table.css';
 
 const TextCell = ({rowIndex, data, col, ...props}) => (
     <Cell {...props}>
@@ -38,18 +31,7 @@ const AmtCell = ({rowIndex, data, colAmt, ...props}) => (
     </Cell>
 );
 class PaymentTable extends React.Component {
-    constructor(props) {
-        super(props);
-    };
-
     render() {
-        var theme = {
-            disabledStyle: {background: 'gray'},
-            overStyle: {background: 'red'},
-            activeStyle: {background: 'red'},
-            pressedStyle: {background: 'magenta', fontWeight: 'bold'},
-            overPressedStyle: {background: 'purple', fontWeight: 'bold'}
-        }
         var {paymentList} = this.props;
         var {onCancel} = this.props;
         return (
@@ -90,7 +72,4 @@ class PaymentTable extends React.Component {
     }
 }
 
-PaymentTable.propTypes = {
-    // onTodoClick: PropTypes.func.isRequired
-}
-module.exports = PaymentTable;
+export default PaymentTable

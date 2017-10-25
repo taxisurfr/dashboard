@@ -30,6 +30,7 @@ const App = () => {
                     <Route path="/" component={AdminApp}></Route>
                     <Route path="/finance" component={AdminApp}></Route>
                     <Route path="/booking" component={AdminApp}></Route>
+                    <Route path="/routes" component={AdminApp}></Route>
                 </Router>
             </div>
         </Provider>

@@ -1,14 +1,5 @@
-{
-  "paymentList": [
-    {
-      "id": 101
-    }
-  ],
-  "transferList": [
-    {
-      "id": 101,
-      "financeType": "PAYMENT"
-    }
-  ],
-  "summaryList": []
-}
+[
+  {id:1000,cents:123},
+  {id:1001,cents:456},
+  {id:1002,cents:789}
+ ]

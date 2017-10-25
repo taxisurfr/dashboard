@@ -7,6 +7,7 @@ import About from './About/About';
 import Contact from './Contact/Contact';
 import FinanceTableContainer from './Finance/Finance';
 import Booking from './Booking/Booking';
+import Routes from './Routes/Routes';
 import logo from './logo.svg';
 import {
     loginLogoutWithToken,
@@ -41,12 +42,14 @@ class AdminApp extends Component {
         const {loggedIn} = this.props;
         const finance = (pathname==='' || pathname==='finance'|| pathname==='/finance') && loggedIn;
         const booking = (pathname==='booking'|| pathname==='/booking') && loggedIn;
+        const routes = (pathname==='routes'|| pathname==='/routes') && loggedIn;
 
         return (
             <div>
                 <AdminAppbar loggedIn={loggedIn} login={this.login} logout={this.logout}/>
                 {finance && <FinanceTableContainer/>}
                 {booking && <Booking/>}
+                {routes && <Routes/>}
 
             </div>
         )

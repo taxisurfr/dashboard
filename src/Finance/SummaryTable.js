@@ -1,8 +1,8 @@
+
+import {FormattedNumber} from 'react-intl';
 var TableStore = require('./../util/TableStore');
 var FixedDataTable = require('fixed-data-table');
 var React = require('react');
-import {FormattedNumber} from 'react-intl';
-
 const {Table, Column, ColumnGroup, Cell} = FixedDataTable;
 
 const TextCell = ({rowIndex, data, col, ...props}) => (
@@ -55,4 +55,4 @@ class SummaryTable extends React.Component {
     }
 }
 
-module.exports = SummaryTable;
+export default SummaryTable;

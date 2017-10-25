@@ -48,6 +48,7 @@ export function setTransferAmount(transferAmount) {
 
 
 function fetchFinanceData() {
+    console.log('fetchFinanceData');
     return dispatch => {
         dispatch(requestFinanceData())
         fetch(getUrl('finance'), getOptions('POST'))

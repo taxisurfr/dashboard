@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch'
 import util from 'util';
-var TableStore = require('./../util/TableStore');
 import {getMethod,getOptions,getUrl} from '../util/network';
+var TableStore = require('./../util/TableStore');
 
 export const REQUEST_BOOKINGDATA = 'REQUEST_BOOKINGDATA'
 export const RECEIVE_BOOKINGDATA = 'RECEIVE_BOOKINGDATA'
@@ -19,32 +19,6 @@ function receiveBookingData(json) {
         admin: json.admin
     }
 }
-
-
-/*
-function getUrl(type) {
-    var url = 'https://app.taxisurfr.com/';
-    // url = 'http://localhost:3001/';
-    url = 'http://localhost:8080/taxisurfr-1.0/';
-    url = url + 'rest/admin/'+type;
-    return url;
-}
-function getOptions(method) {
-    var tokenId = localStorage.getItem("tokenId");
-    var getBookingData = {
-        method: method,
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + tokenId
-        },
-        // mode: 'no-cors',
-        cache: 'default'
-    };
-    return getBookingData;
-}
-*/
-
 
 
 function fetchBookingData() {

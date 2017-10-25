@@ -1,12 +1,9 @@
 "use strict";
 
-var PaymentTable = require('./PaymentTable');
-var TransferTable = require('./TransferTable');
-var SummaryTable = require('./SummaryTable');
-var TableStore = require('./../util/TableStore');
+
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
-import  {
+import {
     fetchFinanceDataIfNeeded,
     transferActive,
     setTransferName,
@@ -14,7 +11,9 @@ import  {
     cancelBooking,
     saveTransferOnServer
 } from './actions';
-
+import PaymentTable from "./PaymentTable";
+import TransferTable from "./TransferTable";
+import SummaryTable from "./SummaryTable";
 
 class FinanceTableContainer extends React.Component {
     constructor(props) {
@@ -26,44 +25,44 @@ class FinanceTableContainer extends React.Component {
 
     };
 
-    componentDidMount() {
-        const {dispatch} = this.props;
-        dispatch(fetchFinanceDataIfNeeded());
-    }
-
-    onTransfer(active){
+    onTransfer(active) {
         const {dispatch} = this.props;
         dispatch(transferActive(active));
     }
-    saveTransfer(){
+
+    saveTransfer() {
         const {dispatch} = this.props;
-        dispatch(saveTransferOnServer(this.props.transferAmount*100,this.props.transferName));
+        dispatch(saveTransferOnServer(this.props.transferAmount * 100, this.props.transferName));
     }
-    transferNameChange(e){
+
+    transferNameChange(e) {
         const {dispatch} = this.props;
         dispatch(setTransferName(e.target.value));
     }
-    transferAmountChange(e){
+
+    transferAmountChange(e) {
         const {dispatch} = this.props;
         dispatch(setTransferAmount(e.target.value));
     }
 
     render() {
+        const financeDataAvailable = this.props.financeDataAvailable;
+        if (!financeDataAvailable) this.props.dispatch(fetchFinanceDataIfNeeded());
         return (
             <div>
-                {/*<PaymentTable paymentList={this.props.paymentList} />*/}
-                <PaymentTable paymentList={this.props.paymentList} onCancel={this.props.onCancelBookingClick}/>
-                <TransferTable
-                    transferActive={this.props.transferActive}
-                    transferList={this.props.transferList}
-                    admin={this.props.admin}
-                    onTransfer={this.onTransfer}
-                    transferName={this.props.transferName}
-                    transferNameChange={this.transferNameChange}
-                    transferAmountChange={this.transferAmountChange}
-                    saveTransfer={this.saveTransfer}
-                />
-                <SummaryTable summaryList={this.props.summaryList}/>
+                {!financeDataAvailable && <i className="fa fa-spinner fa-spin fa-3x fa-fw"></i>}
+                {financeDataAvailable &&
+                <div>
+                    <PaymentTable paymentList={this.props.paymentList}
+                                  onCancel={this.props.onCancelBookingClick}/>
+                    < TransferTable
+                        transferActive={this.props.transferActive}
+                        transferList={this.props.transferList}
+                        admin={this.props.admin}
+                    />
+                    <SummaryTable summaryList={this.props.summaryList}/>
+                </div>
+                }
             </div>
         );
     }
@@ -73,11 +72,14 @@ FinanceTableContainer.propTypes = {
     transferName: PropTypes.string.isRequired,
     paymentList: PropTypes.object.isRequired,
     transferList: PropTypes.object.isRequired,
+    financeDataAvailable: PropTypes.bool.isRequired,
     isFetching: PropTypes.bool.isRequired,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
+    onCancelBookingClick: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
+    const {financeDataAvailable} = state.financeData;
     const {paymentList} = state.financeData;
     const {transferList} = state.financeData;
     const {summaryList} = state.financeData;
@@ -97,21 +99,22 @@ function mapStateToProps(state) {
         paymentList: paymentList,
         transferList: transferList,
         summaryList: summaryList,
-        admin:admin,
+        admin: admin,
         transferActive: transferActive,
         transferName: transferName,
-        transferAmount: transferAmount
+        transferAmount: transferAmount,
+        financeDataAvailable: financeDataAvailable
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         onCancelBookingClick: (id) => {
-            console.log('cancelling row'+id);
+            console.log('cancelling row' + id);
             dispatch(cancelBooking(id))
         },
-        dispatch : dispatch
+        dispatch: dispatch
     }
 }
-export default connect(mapStateToProps,mapDispatchToProps)(FinanceTableContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(FinanceTableContainer)
 

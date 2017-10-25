@@ -1,8 +1,9 @@
+import {Modal, Button, FormGroup, ControlLabel, FormControl, HelpBlock} from 'react-bootstrap';
+import {FormattedNumber} from 'react-intl';
+
 var TableStore = require('./../util/TableStore');
 var FixedDataTable = require('fixed-data-table');
 var React = require('react');
-import {Modal,Button,FormGroup,ControlLabel,FormControl,HelpBlock} from 'react-bootstrap';
-import {FormattedNumber} from 'react-intl';
 
 
 const {Table, Column, ColumnGroup, Cell} = FixedDataTable;
@@ -17,13 +18,12 @@ const AmtCell = ({rowIndex, data, colAmt, ...props}) => (
     <Cell {...props}>
         <div className="mui--text-right">
             <FormattedNumber
-                value={data.getObjectAt(rowIndex)[colAmt]/100}
+                value={data.getObjectAt(rowIndex)[colAmt] / 100}
                 style="currency"
-                currency="USD" />
+                currency="USD"/>
         </div>
     </Cell>
 );
-
 
 
 /*
@@ -44,12 +44,14 @@ class TransferTable extends React.Component {
 
     };
 
-    handleTransferNameChange(e){
+    handleTransferNameChange(e) {
         this.props.transferNameChange(e.target.value);
     }
-    saveTransfer(){
+
+    saveTransfer() {
         console.log('xxxx')
     }
+
     render() {
         var {transferList} = this.props;
         var {admin} = this.props;
@@ -76,7 +78,7 @@ class TransferTable extends React.Component {
                                 value={this.props.transferAmount}
                                 onChange={this.props.transferAmountChange}
                             />
-                           {/* <FieldGroup
+                            {/* <FieldGroup
                                 id="formControlsText"
                                 type="text"
                                 label="Name"
@@ -94,8 +96,8 @@ class TransferTable extends React.Component {
                     <Modal.Footer>
                         <Button onClick={() => this.props.onTransfer(false)}>Close</Button>
                         <Button bsStyle="primary"
-                        onClick={() => this.props.saveTransfer(101,'some transfer description')}>
-                        >Save changes</Button>
+                                onClick={() => this.props.saveTransfer(101, 'some transfer description')}>
+                            >Save changes</Button>
                     </Modal.Footer>
 
                 </Modal.Dialog>}
@@ -133,8 +135,9 @@ class TransferTable extends React.Component {
                     />
                 </Table>
             </div>
-    );
+        );
     }
-    }
+}
 
-    module.exports = TransferTable;
+export default TransferTable;
+

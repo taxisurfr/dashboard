@@ -1,30 +1,27 @@
 "use strict";
 
-var BookingTable = require('./BookingTable');
-var TableStore = require('./../util/TableStore');
+
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import  {fetchBookingDataIfNeeded,cancelBooking} from './actions';
-
+import BookingTable from "./BookingTable";
 
 class BookingTableContainer extends React.Component {
     constructor() {
         super();
     };
 
-    componentDidMount() {
-        const {dispatch} = this.props;
-        dispatch(fetchBookingDataIfNeeded())
-    }
-
 
     render() {
+        const bookingDataAvailable = this.props.bookingDataAvailable;
+        if (!bookingDataAvailable)this.props.dispatch(fetchBookingDataIfNeeded());
         return (
             <div>
-                <BookingTable
+                {!bookingDataAvailable && <i className="fa fa-spinner fa-spin fa-3x fa-fw"></i>}
+                {bookingDataAvailable && <BookingTable
                     admin={this.props.admin}
                     bookingList={this.props.bookingList}
-                    onCancel={this.props.onCancelBookingClick}/>
+                    onCancel={this.props.onCancelBookingClick}/>}
             </div>
         );
     }
@@ -32,11 +29,13 @@ class BookingTableContainer extends React.Component {
 
 BookingTableContainer.propTypes = {
     bookingList: PropTypes.object.isRequired,
-    isFetching: PropTypes.bool.isRequired,
+    bookingDataAvailable: PropTypes.bool.isRequired,
+    onCancelBookingClick: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
+    const {bookingDataAvailable} = state.bookingData;
     const {bookingList} = state.bookingData;
     const {admin} = state.bookingData;
     const {
@@ -49,7 +48,8 @@ function mapStateToProps(state) {
     return {
         isFetching: false,
         bookingList: bookingList,
-        admin:admin
+        admin:admin,
+        bookingDataAvailable
     }
 }
 

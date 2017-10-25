@@ -1,12 +1,9 @@
-var TableStore = require('./../util/TableStore');
-var FixedDataTable = require('fixed-data-table');
+
 import React, {PropTypes} from 'react'
 import {Button} from 'react-bootstrap';
-
-// var IntlMixin     = ReactIntl.IntlMixin;
 import {FormattedDate} from 'react-intl';
-
-const {Table, Column, ColumnGroup, Cell} = FixedDataTable;
+import {ButtonCell} from "../util/tableColumns";
+import {Table, Column, Cell} from 'fixed-data-table';
 
 const TextCell = ({rowIndex, data, col, ...props}) => (
     <Cell {...props}>
@@ -29,11 +26,11 @@ const DateCell = ({rowIndex, data, col, ...props}) => (
     </Cell>
 );
 
-const ButtonCell = ({rowIndex, data, status,col, ...props}) => (
+/*const ButtonCell = ({rowIndex, data, status,col, ...props}) => (
         <Button disabled={data.getObjectAt(rowIndex)[status] !== 'PAID'}
             onClick={() => props.onClick(data.getObjectAt(rowIndex)[col])}
         >Cancel</Button>
-);
+);*/
 
 
 class BookingTable extends React.Component {
@@ -54,6 +51,7 @@ class BookingTable extends React.Component {
         var {onCancel} = this.props;
         return (
             <div>
+
                 <Table
                     rowHeight={30}
                     groupHeaderHeight={30}
@@ -104,4 +102,4 @@ class BookingTable extends React.Component {
 BookingTable.propTypes = {
     // onTodoClick: PropTypes.func.isRequired
 }
-module.exports = BookingTable;
+export default BookingTable;
