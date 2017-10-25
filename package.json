@@ -5,7 +5,8 @@
 
   "dependencies": {
     "express": "^4.13.4",
-    "morgan": "^1.7.0"
+    "morgan": "^1.7.0",
+    "object-assign": "4.1.0"
   },
   "scripts": {
     "start": "node server.js"
