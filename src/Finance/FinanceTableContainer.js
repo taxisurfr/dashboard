@@ -59,6 +59,11 @@ class FinanceTableContainer extends React.Component {
                         transferActive={this.props.transferActive}
                         transferList={this.props.transferList}
                         admin={this.props.admin}
+                        onTransfer={this.onTransfer}
+                        transferName={this.props.transferName}
+                        transferNameChange={this.transferNameChange}
+                        transferAmountChange={this.transferAmountChange}
+                        saveTransfer={this.saveTransfer}
                     />
                     <SummaryTable summaryList={this.props.summaryList}/>
                 </div>
