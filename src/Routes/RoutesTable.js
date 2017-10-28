@@ -17,7 +17,7 @@ const TextCell = ({rowIndex, data, col, ...props}) => (
 );
 const LinkCell = ({rowIndex, data, col, ...props}) => (
     <Cell {...props}>
-        <div>{'https://taxisurfr.com' + data.getObjectAt(rowIndex)[col]}</div>
+        <div>{'http://taxisurfr.com' + data.getObjectAt(rowIndex)[col]}</div>
     </Cell>
 );
 
