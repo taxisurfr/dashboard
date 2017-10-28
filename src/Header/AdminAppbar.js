@@ -28,7 +28,7 @@ class AdminAppbar extends Component {
                 <table width="100%">
                     <tbody>
                     <tr style={s1}>
-                        <td><Links /></td>
+                        {loggedIn &&<td><Links /></td>}
                         <td className="mui--appbar-height mui--pull-right">
                             {!loggedIn && <GoogleLogin
                                 clientId="468150866643-hvi544b3jp0bjptd444gsg365nd576j6.apps.googleusercontent.com"

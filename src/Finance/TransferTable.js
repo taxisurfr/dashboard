@@ -1,4 +1,4 @@
-import {Modal, Button, FormGroup, ControlLabel, FormControl, HelpBlock} from 'react-bootstrap';
+import {Modal, Button, ControlLabel, FormControl} from 'react-bootstrap';
 import {FormattedNumber} from 'react-intl';
 
 var TableStore = require('./../util/TableStore');

@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {editRoute, fetchRoutesDataIfNeeded} from './actions';
+import {addRoute, addRouteActive, editRoute, fetchRoutesDataIfNeeded, updateNewRoute} from './actions';
 import RoutesTable from "./RoutesTable";
 
 class RoutesTableContainer extends React.Component {
@@ -8,6 +8,11 @@ class RoutesTableContainer extends React.Component {
         super(props);
         this.showResults = this.showResults.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
+        this.onAddRoute = this.onAddRoute.bind(this);
+        this.saveRoute = this.saveRoute.bind(this);
+        this.updateStartRoute = this.updateStartRoute.bind(this);
+        this.updateEndRoute = this.updateEndRoute.bind(this);
+
     }
 
     showResults(values) {
@@ -21,6 +26,28 @@ class RoutesTableContainer extends React.Component {
         this.props.dispatch(editRoute(id,cents));
     }
 
+    onAddRoute(active){
+        this.props.dispatch(addRouteActive(active));
+    }
+
+    saveRoute(route){
+        this.props.dispatch(addRoute(route));
+        this.onAddRoute(false);
+    }
+
+    updateStartRoute(event) {
+        if (event) {
+            const value = event.value;
+            this.props.dispatch(updateNewRoute('startroute', value));
+        }
+    }
+    updateEndRoute(event) {
+        if (event) {
+            const value = event.value;
+            this.props.dispatch(updateNewRoute('endroute', value));
+        }
+    }
+
     render() {
         const {routesDataAvailable} = this.props;
         if (!routesDataAvailable) this.props.dispatch(fetchRoutesDataIfNeeded());
@@ -32,6 +59,15 @@ class RoutesTableContainer extends React.Component {
                     routesList={this.props.routesList}
                     onSaveRoute={this.handleUpdate}
                     centValues={this.props.centValues}
+                    addRouteActive={this.onAddRoute}
+                    isAddRouteActive={this.props.isAddRouteActive}
+                    saveRoute={this.saveRoute}
+                    updateStartRoute={this.updateStartRoute}
+                    updateEndRoute={this.updateEndRoute}
+                    route={this.props.route}
+                    locations={this.props.locations}
+                    created={this.props.created}
+
                 />}
             </div>
         );
@@ -50,12 +86,26 @@ function mapStateToProps(state) {
     const {routesList} = state.routesData;
     const {admin} = state.routesData;
     const {centValues} = state.routesData;
+    const {addRouteActive} = state.routesData;
+    const {isAddRouteActive} = state.routesData;
+
+    const {startroute} = state.routesData;
+    const {endroute} = state.routesData;
+    const {isFetching} = state.routesData;
+    const {locations} = state.routesData;
+    const {created} = state.routesData;
 
     return {
         routesList: routesList,
         admin:admin,
         routesDataAvailable,
-        centValues
+        centValues,
+        addRouteActive,
+        isFetching,
+        isAddRouteActive,
+        locations,
+        created,
+        route: {startroute:startroute, endroute: endroute}
     }
 }
 

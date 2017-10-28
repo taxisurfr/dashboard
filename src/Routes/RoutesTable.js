@@ -7,6 +7,8 @@ import {FormattedNumber} from 'react-intl';
 import Input from 'muicss/lib/react/input';
 import {Field, reduxForm} from 'redux-form';
 import {updateRoute} from "./actions";
+import AdminAppbar from "../Header/AdminAppbar";
+import AddRouteAppbar from "./AddRouteAppbar";
 
 const TextCell = ({rowIndex, data, col, ...props}) => (
     <Cell {...props}>
@@ -15,7 +17,7 @@ const TextCell = ({rowIndex, data, col, ...props}) => (
 );
 const LinkCell = ({rowIndex, data, col, ...props}) => (
     <Cell {...props}>
-        <div>{'taxisurfr.com' + data.getObjectAt(rowIndex)[col]}</div>
+        <div>{'https://taxisurfr.com' + data.getObjectAt(rowIndex)[col]}</div>
     </Cell>
 );
 
@@ -99,7 +101,19 @@ class RoutesTable extends React.Component {
         var {onSaveRoute} = this.props;
         const {centValues} = this.props;
         return (
+            <div>
+            {admin &&<div><AddRouteAppbar
+                addRouteActive={this.props.addRouteActive}
+                saveRoute={this.props.saveRoute}
+                updateStartRoute={this.props.updateStartRoute}
+                updateEndRoute={this.props.updateEndRoute}
+                route={this.props.route}
+                isAddRouteActive={this.props.isAddRouteActive}
+                locations={this.props.locations}
+                created={this.props.created}
+            /></div>}
             <form>
+
                 <Table
                     rowHeight={30}
                     groupHeaderHeight={30}
@@ -148,6 +162,7 @@ class RoutesTable extends React.Component {
                     />
                 </Table>
             </form>
+            </div>
         );
     }
 }

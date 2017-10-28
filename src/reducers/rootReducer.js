@@ -6,7 +6,7 @@ import {
     TRANSFER_ACTIVE,TRANSFER_NAME_CHANGE,TRANSFER_AMOUNT_CHANGE
 } from '../Finance/actions';
 import {
-    REQUEST_ROUTESDATA, RECEIVE_ROUTESDATA, UPDATE_ROUTESDATA
+    REQUEST_ROUTESDATA, RECEIVE_ROUTESDATA, UPDATE_ROUTESDATA,ADD_ROUTE_STATUS_CHANGE,UPDATE_NEW_ROUTESDATA
 } from '../Routes/actions';
 import {
     LOGINLOGOUT
@@ -88,7 +88,8 @@ function routesData(state = {
     isFetching: false,
     routesList: new TableStore(""),
     routesDataAvailable: false,
-    centValues: []
+    centValues: [],
+    addRouteActive: false
 }, action) {
     switch (action.type) {
         case REQUEST_ROUTESDATA:
@@ -102,13 +103,32 @@ function routesData(state = {
                 routesList: action.routesList,
                 routesDataAvailable: true,
                 admin:action.admin,
-                centValues: action.centValues
+                centValues: action.centValues,
+                locations: action.locations,
+                created:action.created
             })
         case UPDATE_ROUTESDATA:
             state.centValues[action.id] =action.cents;
             return Object.assign({}, state, {
                 centValues: state.centValues
             })
+        case UPDATE_NEW_ROUTESDATA:
+            switch (action.updateType){
+                case 'startroute':
+                    return Object.assign({}, state, {
+                        startroute: action.value
+                    })
+                case 'endroute':
+                    return Object.assign({}, state, {
+                        endroute: action.value
+                    })
+            }
+        case ADD_ROUTE_STATUS_CHANGE:
+            return Object.assign({}, state, {
+                isAddRouteActive: action.isAddRouteActive
+            })
+
+
         default:
             return state
     }

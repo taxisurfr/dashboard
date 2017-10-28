@@ -6,19 +6,35 @@ var TableStore = require('./../util/TableStore');
 export const RECEIVE_ROUTESDATA = 'RECEIVE_ROUTESDATA'
 export const REQUEST_ROUTESDATA = 'REQUEST_ROUTESDATA'
 export const UPDATE_ROUTESDATA = 'UPDATE_ROUTESDATA'
+export const ADD_ROUTE_STATUS_CHANGE = 'ADD_ROUTE_STATUS_CHANGE'
+export const UPDATE_NEW_ROUTESDATA = 'UPDATE_NEW_ROUTESDATA'
 
 export function updateRoute(id,cents) {
     return {
         type: UPDATE_ROUTESDATA,
         id: id,
         cents: cents
+    }
+}
 
+export function updateNewRoute(updateType,value) {
+    return {
+        type: UPDATE_NEW_ROUTESDATA,
+        updateType: updateType,
+        value:value
     }
 }
 
 function requestRoutesData() {
     return {
         type: REQUEST_ROUTESDATA
+    }
+}
+
+export function addRouteActive(isAddRouteActive){
+    return {
+        type: ADD_ROUTE_STATUS_CHANGE,
+        isAddRouteActive:isAddRouteActive
     }
 }
 
@@ -32,7 +48,9 @@ function receiveRoutesData(json) {
         type: RECEIVE_ROUTESDATA,
         routesList: new TableStore(json.routesList),
         admin: json.admin,
-        centValues: centValues
+        centValues: centValues,
+        locations: json.locations,
+        created: json.created
     }
 }
 
@@ -51,7 +69,7 @@ function fetchRoutesData() {
 }
 
 function shouldFetchRoutesData(state) {
-    return !state.routesData.routesDataAvailable;
+    return !state.routesData.routesDataAvailable && !state.routesData.isFetching;
 }
 
 export function fetchRoutesDataIfNeeded() {
@@ -67,6 +85,12 @@ export function editRoute(id,cents) {
         return dispatch(updateRouteOnServer(id,cents))
     }
 }
+export function addRoute(route) {
+    return (dispatch, getState) => {
+        return dispatch(addRouteOnServer(route))
+    }
+}
+
 function updateRouteOnServer(id,cents) {
     var body = JSON.stringify({
         id: id,
@@ -75,6 +99,24 @@ function updateRouteOnServer(id,cents) {
 
     return dispatch => {
         fetch(getUrl('editRoute'), getMethod('POST',body))
+            .then((response) => response.json())
+            .then((responseJson) => dispatch(receiveRoutesData(responseJson)))
+            .catch((error) => {
+                console.error(error);
+            });
+
+    }
+
+}
+
+function addRouteOnServer(route) {
+    var body = JSON.stringify({
+        startroute: route.startroute,
+        endroute: route.endroute
+    });
+
+    return dispatch => {
+        fetch(getUrl('createRoute'), getMethod('POST',body))
             .then((response) => response.json())
             .then((responseJson) => dispatch(receiveRoutesData(responseJson)))
             .catch((error) => {
