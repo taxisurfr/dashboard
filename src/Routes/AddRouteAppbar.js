@@ -1,41 +1,19 @@
 import React, {Component} from 'react'
 import Appbar from 'muicss/lib/react/appbar';
-import {Modal, Button, ControlLabel, FormControl} from 'react-bootstrap';
+import {Modal, Button, ControlLabel} from 'react-bootstrap';
 import Select from 'react-select';
+import AddStartRouteDialog from './AddStartRouteDialog';
 
 import 'react-select/dist/react-select.css';
 
 class AdminAppbar extends Component {
-    constructor(props) {
-        super(props);
-        this.logChange = this.logChange.bind(this);
-    }
-
-
-    logout = (response) => {
-        console.log(response);
-    }
-
-    logChange(val) {
-        console.log('Selected: ', val);
-    }
 
     render() {
-        const clrText = {color: 'black'};
-        const clr = {backgroundColor: '#66ff99'};
-
         const s1 = {verticalAlign: 'middle'};
-
-        var {addRouteActive} = this.props;
         var {isAddRouteActive} = this.props;
 
-        var options = [
-            { value: 'one', label: 'One' },
-            { value: 'two', label: 'Two' }
-        ];
-
         return (
-            <Appbar style={clr}>
+            <Appbar >
                 {isAddRouteActive && <Modal.Dialog>
                     <Modal.Header>
                         <Modal.Title>Add transfer</Modal.Title>
@@ -48,7 +26,7 @@ class AdminAppbar extends Component {
                                 name="form-field-name-startroute"
                                 value={this.props.route.startroute}
                                 options={this.props.locations}
-                                onChange={this.props.updateStartRoute}
+                                onChange={this.props.updateStartRouteFromSelect}
                             />
                             <Select
                                 name="form-field-name-endroute"
@@ -56,29 +34,28 @@ class AdminAppbar extends Component {
                                 options={this.props.locations}
                                 onChange={this.props.updateEndRoute}
                             />
-                           {/* <Select
-                                id="startroute"
-                                values={this.props.locations}
-                                onChange={this.props.updateRoute}
-                            />
-                            <ControlLabel>End</ControlLabel>
-                            <FormControl
-                                id="endroute"
-                                type="text"
-                                value={this.props.route.endroute}
-                                placeholder="destination"
-                                onChange={this.props.updateRoute}
-                            />*/}
                         </form>
                     </Modal.Body>
 
                     <Modal.Footer>
+
                         <Button bsStyle="primary"
                                 onClick={() => this.props.saveRoute(this.props.route)}>
-                            >Save route</Button>
+                            Save route</Button>
+                        <Button bsStyle="primary"
+                                onClick={() => this.props.onAddRouteActive(false)}>
+                            Cancel</Button>
                     </Modal.Footer>
 
                 </Modal.Dialog>}
+
+                {this.props.isAddStartRouteActive && <AddStartRouteDialog
+                    saveStartRoute={this.props.saveStartRoute}
+                    updateRouteId={this.props.updateRouteId}
+                    updateStartRouteFromText={this.props.updateStartRouteFromText}
+                    onAddStartRouteActive={this.props.onAddStartRouteActive}
+                    route={this.props.route}
+                />}
 
                 <table width="100%" className="mui--appbar-height mui--pull-left">
                     <tbody>
@@ -88,8 +65,11 @@ class AdminAppbar extends Component {
                         </td>
                         <td>
                             <Button
-                                onClick={() => this.props.addRouteActive(true)}>
+                                onClick={() => this.props.onAddRouteActive(true)}>
                                 Add Route</Button>
+                            <Button
+                                onClick={() => this.props.onAddStartRouteActive(true)}>
+                                Add Start</Button>
                         </td>
 
                     </tr>

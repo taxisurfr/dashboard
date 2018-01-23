@@ -31,6 +31,8 @@ const App = () => {
                     <Route path="/finance" component={AdminApp}></Route>
                     <Route path="/booking" component={AdminApp}></Route>
                     <Route path="/routes" component={AdminApp}></Route>
+                    <Route path="/contractors" component={AdminApp}></Route>
+                    <Route path="/prices" component={AdminApp}></Route>
                 </Router>
             </div>
         </Provider>

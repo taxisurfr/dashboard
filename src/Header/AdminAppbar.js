@@ -3,6 +3,7 @@ import Appbar from 'muicss/lib/react/appbar';
 import GoogleLogin from '../Login/Google';
 import GoogleLogout from '../Login/Google';
 import Links from '../Links/Links';
+import {Label} from "react-bootstrap";
 
 class AdminAppbar extends Component {
 
@@ -28,7 +29,13 @@ class AdminAppbar extends Component {
                 <table width="100%">
                     <tbody>
                     <tr style={s1}>
-                        {loggedIn &&<td><Links /></td>}
+                        {loggedIn &&<td><Links admin={this.props.admin}/></td>}
+                       {/* {admin && <Select
+                            name="form-field-name-contractor-name"
+                            value={this.props.contractorName}
+                            options={this.props.contractorNameList}
+                            onChange={(e) => this.props.updateContractor('contractor', true, e)}
+                        />}*/}
                         <td className="mui--appbar-height mui--pull-right">
                             {!loggedIn && <GoogleLogin
                                 clientId="468150866643-hvi544b3jp0bjptd444gsg365nd576j6.apps.googleusercontent.com"
@@ -36,6 +43,7 @@ class AdminAppbar extends Component {
                                 onSuccess={login}
                                 onFailure={login}
                             />}
+                            {loggedIn && <h2><Label>{this.props.loginName}</Label></h2>}
                             {/*{loggedIn && <GoogleLogout
                                 clientId="468150866643-hvi544b3jp0bjptd444gsg365nd576j6.apps.googleusercontent.com"
                                 buttonText="Logout"

@@ -11,8 +11,10 @@ import Routes from './Routes/Routes';
 import logo from './logo.svg';
 import {
     loginLogoutWithToken,
-    LOGIN
+    LOGIN, getLoginDetails
 } from './Header/actions'
+import Contractors from "./Contractors/Contractors";
+import Prices from "./Prices/Prices";
 
 /*import {getRouteDescription, getFormatedPrice,getPickup}
  from '../util/formatter';*/
@@ -25,7 +27,8 @@ class AdminApp extends Component {
     login = (response) => {
         localStorage.setItem("tokenId", response.tokenId);
         const {dispatch} = this.props;
-        dispatch(loginLogoutWithToken(true));
+        dispatch(loginLogoutWithToken(true,response.profileObj.email));
+        dispatch(getLoginDetails());
     }
     logout = (response) => {
         localStorage.setItem("tokenId", null);
@@ -40,16 +43,27 @@ class AdminApp extends Component {
 
         const {pathname} = this.props.location;
         const {loggedIn} = this.props;
+        const {admin} = this.props;
         const finance = (pathname==='' || pathname==='finance'|| pathname==='/finance') && loggedIn;
         const booking = (pathname==='booking'|| pathname==='/booking') && loggedIn;
-        const routes = (pathname==='routes'|| pathname==='/routes') && loggedIn;
+        const routes = (pathname==='routes'|| pathname==='/routes') && loggedIn && admin;
+        const contractors = (pathname==='contractors'|| pathname==='/contractors') && loggedIn && admin;
+        const prices = (pathname==='prices'|| pathname==='/prices') && loggedIn && admin;
 
         return (
             <div>
-                <AdminAppbar loggedIn={loggedIn} login={this.login} logout={this.logout}/>
+                <AdminAppbar
+                    loggedIn={loggedIn}
+                    loginName={this.props.loginName}
+                    login={this.login}
+                    logout={this.logout}
+                    admin={this.props.admin}
+                />
                 {finance && <FinanceTableContainer/>}
                 {booking && <Booking/>}
                 {routes && <Routes/>}
+                {contractors && <Contractors/>}
+                {prices && <Prices/>}
 
             </div>
         )
@@ -64,8 +78,12 @@ AdminApp.propTypes = {
 
 function mapStateToProps(state) {
     const loggedIn = state.financeData.loggedIn;
+    const {loginName} = state.financeData;
+    const {admin} = state.financeData;
     return {
-        loggedIn
+        loginName,
+        loggedIn,
+        admin
     }
 }
 

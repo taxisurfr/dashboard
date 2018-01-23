@@ -9,6 +9,7 @@ import {Field, reduxForm} from 'redux-form';
 import {updateRoute} from "./actions";
 import AdminAppbar from "../Header/AdminAppbar";
 import AddRouteAppbar from "./AddRouteAppbar";
+import AddPriceDialog from "../Routes/AddPriceDialog";
 
 const TextCell = ({rowIndex, data, col, ...props}) => (
     <Cell {...props}>
@@ -41,13 +42,12 @@ class ButtonCellUpdate extends React.Component {
         /*const {data} = this.props;
         const {cent} = this.props;*/
         const {rowIndex} = this.props;
-        const {centValues} = this.props;
-        //var id = data.getObjectAt(rowIndex)['id'];
-        var dirty = centValues[rowIndex] !== null;
+        const {routesList} = this.props;
+        const route = routesList.getObjectAt(rowIndex);        //var id = data.getObjectAt(rowIndex)['id'];
         return (
-            <Button disabled={!dirty}
-                onClick={() => this.props.onClick(rowIndex,this.props)}
-            >Update</Button>
+            <Button
+                onClick={() => this.props.onClick(route)}
+            >Add Price</Button>
         )
     }
 };
@@ -99,16 +99,37 @@ class RoutesTable extends React.Component {
         var {routesList} = this.props;
         var {admin} = this.props;
         var {onSaveRoute} = this.props;
+        var {onAddPrice} = this.props;
         const {centValues} = this.props;
         return (
             <div>
+                {this.props.isAddPriceActive && <AddPriceDialog
+                    savePrice={this.props.savePrice}
+                    updatePrice={this.props.updatePrice}
+                    updatePriceFromSelect={this.props.updatePriceFromSelect}
+                    onAddPriceActive={this.props.onAddPrice}
+                    route={this.props.route}
+                    price={this.props.price}
+                    locations={this.props.locations}
+                    cancelAddPrice={this.props.cancelAddPrice}
+                    contractorIdList={this.props.contractorIdList}
+                    contractorName={this.props.contractorName}
+
+
+                />}
+
             {admin &&<div><AddRouteAppbar
-                addRouteActive={this.props.addRouteActive}
+                onAddRouteActive={this.props.onAddRouteActive}
+                onAddStartRouteActive={this.props.onAddStartRouteActive}
                 saveRoute={this.props.saveRoute}
-                updateStartRoute={this.props.updateStartRoute}
+                saveStartRoute={this.props.saveStartRoute}
+                updateRouteId={this.props.updateRouteId}
+                updateStartRouteFromSelect={this.props.updateStartRouteFromSelect}
+                updateStartRouteFromText={this.props.updateStartRouteFromText}
                 updateEndRoute={this.props.updateEndRoute}
                 route={this.props.route}
                 isAddRouteActive={this.props.isAddRouteActive}
+                isAddStartRouteActive={this.props.isAddStartRouteActive}
                 locations={this.props.locations}
                 created={this.props.created}
             /></div>}
@@ -151,11 +172,10 @@ class RoutesTable extends React.Component {
                         width={150}
                     />
                     <Column
-                        header={<Cell>Save</Cell>}
+                        header={<Cell>New Price</Cell>}
                         cell={<ButtonCellUpdate
-                            data={routesList}
-                            centValues={centValues}
-                            onClick={onSaveRoute}
+                            routesList={routesList}
+                            onClick={onAddPrice}
                             col="id"
                             status="status"/>}
                         width={150}

@@ -7,7 +7,27 @@ export const RECEIVE_ROUTESDATA = 'RECEIVE_ROUTESDATA'
 export const REQUEST_ROUTESDATA = 'REQUEST_ROUTESDATA'
 export const UPDATE_ROUTESDATA = 'UPDATE_ROUTESDATA'
 export const ADD_ROUTE_STATUS_CHANGE = 'ADD_ROUTE_STATUS_CHANGE'
+export const ADD_START_ROUTE_STATUS_CHANGE = 'ADD_START_ROUTE_STATUS_CHANGE'
 export const UPDATE_NEW_ROUTESDATA = 'UPDATE_NEW_ROUTESDATA'
+export const SHOW_ADD_PRICE_STATUS_CHANGE = 'SHOW_ADD_PRICE_STATUS_CHANGE'
+export const UPDATE_PRICE_ON_ROUTE_DATA = 'UPDATE_PRICE_ON_ROUTE_DATA'
+
+export function addPriceActive(route,isAddPriceActive){
+    return {
+        type: SHOW_ADD_PRICE_STATUS_CHANGE,
+        isAddPriceActive:isAddPriceActive,
+        route:route
+    }
+}
+
+export function updatePriceValueOnRoute(type,value) {
+    return {
+        type: UPDATE_PRICE_ON_ROUTE_DATA,
+        value: value,
+        updateType: type
+    }
+}
+
 
 export function updateRoute(id,cents) {
     return {
@@ -38,6 +58,14 @@ export function addRouteActive(isAddRouteActive){
     }
 }
 
+export function addStartRouteActive(isAddStartRouteActive){
+    return {
+        type: ADD_START_ROUTE_STATUS_CHANGE,
+        isAddStartRouteActive:isAddStartRouteActive
+    }
+}
+
+
 function receiveRoutesData(json) {
     var centValues=[];
     for( var i = 0; i < json.routesList.length; i++ ) {
@@ -50,6 +78,7 @@ function receiveRoutesData(json) {
         admin: json.admin,
         centValues: centValues,
         locations: json.locations,
+        contractorIdList: json.contractors,
         created: json.created
     }
 }
@@ -91,6 +120,13 @@ export function addRoute(route) {
     }
 }
 
+export function addStartRoute(route) {
+    return (dispatch, getState) => {
+        return dispatch(addStartRouteOnServer(route))
+    }
+}
+
+
 function updateRouteOnServer(id,cents) {
     var body = JSON.stringify({
         id: id,
@@ -117,6 +153,24 @@ function addRouteOnServer(route) {
 
     return dispatch => {
         fetch(getUrl('createRoute'), getMethod('POST',body))
+            .then((response) => response.json())
+            .then((responseJson) => dispatch(receiveRoutesData(responseJson)))
+            .catch((error) => {
+                console.error(error);
+            });
+
+    }
+
+}
+
+function addStartRouteOnServer(route) {
+    var body = JSON.stringify({
+        startroute: route.startroute,
+        id: route.id
+    });
+
+    return dispatch => {
+        fetch(getUrl('createStartRoute'), getMethod('POST',body))
             .then((response) => response.json())
             .then((responseJson) => dispatch(receiveRoutesData(responseJson)))
             .catch((error) => {

@@ -6,15 +6,21 @@ import {
     TRANSFER_ACTIVE,TRANSFER_NAME_CHANGE,TRANSFER_AMOUNT_CHANGE
 } from '../Finance/actions';
 import {
-    REQUEST_ROUTESDATA, RECEIVE_ROUTESDATA, UPDATE_ROUTESDATA,ADD_ROUTE_STATUS_CHANGE,UPDATE_NEW_ROUTESDATA
+    REQUEST_ROUTESDATA, RECEIVE_ROUTESDATA, UPDATE_ROUTESDATA,
+    ADD_ROUTE_STATUS_CHANGE,
+    ADD_START_ROUTE_STATUS_CHANGE,
+    UPDATE_NEW_ROUTESDATA, SHOW_ADD_PRICE_STATUS_CHANGE, UPDATE_PRICE_ON_ROUTE_DATA
 } from '../Routes/actions';
 import {
+    ISADMIN,
     LOGINLOGOUT
 } from '../Header/actions';
 
 import {
     REQUEST_BOOKINGDATA, RECEIVE_BOOKINGDATA
 } from '../Booking/actions'
+import contractorsData from "../Contractors/contractorsReducer";
+import pricesData from "../Prices/pricesReducer";
 
 function financeData(state = {
     loggedIn:false,
@@ -34,6 +40,13 @@ function financeData(state = {
         case LOGINLOGOUT:
             return Object.assign({}, state, {
                 loggedIn: action.loggedIn,
+                loginName: action.loginName,
+                admin: action.admin
+            })
+        case ISADMIN:
+            return Object.assign({}, state, {
+                admin: action.admin,
+                loginName: action.loginName
             })
         case RECEIVE_FINANCEDATA:
             return Object.assign({}, state, {
@@ -89,7 +102,8 @@ function routesData(state = {
     routesList: new TableStore(""),
     routesDataAvailable: false,
     centValues: [],
-    addRouteActive: false
+    addRouteActive: false,
+    addStartRouteActive: false,
 }, action) {
     switch (action.type) {
         case REQUEST_ROUTESDATA:
@@ -105,7 +119,8 @@ function routesData(state = {
                 admin:action.admin,
                 centValues: action.centValues,
                 locations: action.locations,
-                created:action.created
+                created:action.created,
+                contractorIdList:action.contractorIdList
             })
         case UPDATE_ROUTESDATA:
             state.centValues[action.id] =action.cents;
@@ -114,6 +129,10 @@ function routesData(state = {
             })
         case UPDATE_NEW_ROUTESDATA:
             switch (action.updateType){
+                case 'routeid':
+                    return Object.assign({}, state, {
+                        routeid: action.value
+                    })
                 case 'startroute':
                     return Object.assign({}, state, {
                         startroute: action.value
@@ -122,12 +141,39 @@ function routesData(state = {
                     return Object.assign({}, state, {
                         endroute: action.value
                     })
+                case 'contractor':
+                    return Object.assign({}, state, {
+                        contractorId: action.value
+                    })
             }
         case ADD_ROUTE_STATUS_CHANGE:
             return Object.assign({}, state, {
                 isAddRouteActive: action.isAddRouteActive
             })
 
+        case ADD_START_ROUTE_STATUS_CHANGE:
+            return Object.assign({}, state, {
+                isAddStartRouteActive: action.isAddStartRouteActive
+            })
+        case SHOW_ADD_PRICE_STATUS_CHANGE:
+            return Object.assign({}, state, {
+                isAddPriceActive: action.isAddPriceActive,
+                id: action.route.id,
+                startroute: action.route.startroute,
+                endroute: action.route.endroute
+            })
+        case UPDATE_PRICE_ON_ROUTE_DATA:
+            switch (action.updateType) {
+                case 'cents':
+                    return Object.assign({}, state, {
+                        cents: action.value
+                    })
+                case 'contractor':
+                    return Object.assign({}, state, {
+                        contractorId: action.value.id,
+                        contractorName: action.value.name
+                    })
+            }
 
         default:
             return state
@@ -136,10 +182,14 @@ function routesData(state = {
 
 
 
+
+
 const rootReducer = combineReducers({
     financeData,
     bookingData,
     routesData,
+    contractorsData,
+    pricesData,
     form: reduxFormReducer
 })
 
