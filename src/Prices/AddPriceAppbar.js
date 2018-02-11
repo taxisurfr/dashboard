@@ -40,7 +40,7 @@ class AddPriceAppbar extends Component {
                     <tbody>
                     <tr style={s1}>
                         <td className="mui--appbar-height mui--pull-left">
-                            <h1>Add price</h1>
+                            <h1>Edit price</h1>
                         </td>
                         <td>
                             {/*<Button

@@ -9,7 +9,7 @@ class Links extends Component {
 
             <nav>
                 <Link className="mui--text-headline" to="finance">Finance</Link>
-                {this.props.admin && <Link className="mui--text-headline" to="prices">Price</Link>}
+                <Link className="mui--text-headline" to="prices">Price</Link>
                 <Link className="mui--text-headline" to="booking">Booking</Link>
                 {this.props.admin && <Link className="mui--text-headline" to="routes">Routes</Link>}
                 {this.props.admin && <Link className="mui--text-headline" to="contractors">Contractors</Link>}

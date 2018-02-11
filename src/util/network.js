@@ -5,11 +5,10 @@ export function getUrl(type) {
         console.log(window.location.hostname);
         console.log(window.location.port);
         if (window.location.hostname === 'localhost') {
-            //url = 'http://localhost:8080/';
+            url = 'http://localhost:8080/';
             console.log('CAUTION: connecting with:'+url);
         }
     }
-
     url = url + 'rest/admin/' + type;
     return url;
 }

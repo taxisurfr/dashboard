@@ -5,7 +5,7 @@ import {
     updateNewRoute, addPriceActive, updatePriceValueOnRoute
 } from './actions';
 import RoutesTable from "./RoutesTable";
-import {savePrice, updatePriceValue} from "../Prices/actions";
+import {savePrice, setPricesDataDirty, updatePriceValue} from "../Prices/actions";
 
 class RoutesTableContainer extends React.Component {
     constructor(props) {
@@ -48,6 +48,7 @@ class RoutesTableContainer extends React.Component {
     saveRoute(route){
         this.props.dispatch(addRoute(route));
         this.onAddRouteActive(false);
+        this.props.dispatch(setPricesDataDirty());
     }
 
     saveStartRoute(route){
@@ -79,7 +80,8 @@ class RoutesTableContainer extends React.Component {
         }
     }
     savePrice(price) {
-        this.props.dispatch(savePrice(price));
+        var isNewPrice = true;
+        this.props.dispatch(savePrice(price,isNewPrice));
         this.props.dispatch(addPriceActive({},false));
     }
 /*

@@ -15,7 +15,7 @@ function requestBookingData() {
 function receiveBookingData(json) {
     return {
         type: RECEIVE_BOOKINGDATA,
-        bookingList: new TableStore(json.bookingList),
+        bookingList: json.bookingList ? new TableStore(json.bookingList):null,
         admin: json.admin
     }
 }

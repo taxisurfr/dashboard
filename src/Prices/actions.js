@@ -3,6 +3,7 @@ import {getMethod,getOptions,getUrl} from '../util/network';
 var TableStore = require('./../util/TableStore');
 
 export const RECEIVE_PRICESDATA = 'RECEIVE_PRICESDATA'
+export const PRICESDATA_DIRTY = 'PRICESDATA_DIRTY'
 export const REQUEST_PRICESDATA = 'REQUEST_PRICESDATA'
 export const UPDATE_PRICESDATA = 'UPDATE_PRICESDATA'
 export const RESET_PRICESDATA = 'RESET_PRICESDATA'
@@ -25,6 +26,13 @@ export function editPrice(price,show) {
         price: price
     }
 }
+
+export function setPricesDataDirty() {
+    return {
+        type: PRICESDATA_DIRTY
+    }
+}
+
 
 function requestPricesData() {
     return {
@@ -80,15 +88,15 @@ export function fetchPriceDataIfNeeded() {
     }
 }
 
-export function savePrice(price) {
+export function savePrice(price,isNew) {
     return (dispatch, getState) => {
-        return dispatch(addPriceOnServer(price))
+        return dispatch(addPriceOnServer(price,isNew))
     }
 }
 
-function addPriceOnServer(price,update) {
+function addPriceOnServer(price,isNew) {
     var body = JSON.stringify({
-        id: price.id,
+        newPrice: isNew,
         startroute: price.startroute,
         endroute: price.endroute,
         routeId: price.routeId,

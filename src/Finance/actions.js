@@ -19,13 +19,14 @@ function requestFinanceData() {
 function receiveFinanceData(json) {
     return {
         type: RECEIVE_FINANCEDATA,
+        contractorIdList: json.contractorIdList,
+        contractor: json.contractor,
         transferList: new TableStore(json.transferList),
         paymentList: new TableStore(json.paymentList),
         summaryList: new TableStore(json.summaryList),
         admin: json.admin
     }
 }
-
 
 export function transferActive(active) {
     return {
@@ -47,11 +48,17 @@ export function setTransferAmount(transferAmount) {
 }
 
 
-function fetchFinanceData() {
+function fetchFinanceData(contractor) {
     console.log('fetchFinanceData');
+
     return dispatch => {
-        dispatch(requestFinanceData())
-        fetch(getUrl('finance'), getOptions('POST'))
+        dispatch(requestFinanceData());
+        var body = JSON.stringify({
+            cents: 22,
+            description: 'description'
+
+        });
+        fetch(getUrl('finance'), getOptions('POST',body))
             .then((response) => response.json())
             .then((responseJson) => dispatch(receiveFinanceData(responseJson)))
             .catch((error) => {
@@ -60,15 +67,16 @@ function fetchFinanceData() {
     }
 }
 
+
 function shouldFetchFinanceData(state) {
     const financeData = state.financeData
     return !financeData.isFetching;
 }
 
-export function fetchFinanceDataIfNeeded() {
+export function fetchFinanceDataIfNeeded(contractor) {
     return (dispatch, getState) => {
         if (shouldFetchFinanceData(getState())) {
-            return dispatch(fetchFinanceData())
+            return dispatch(fetchFinanceData(contractor))
         }
     }
 }

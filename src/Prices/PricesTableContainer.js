@@ -13,18 +13,19 @@ class PriceTableContainer extends React.Component {
         this.updatePrice = this.updatePrice.bind(this);
         this.updatePriceFromSelect = this.updatePriceFromSelect.bind(this);
         this.showEditPrice = this.showEditPrice.bind(this);
+        this.onAddPriceActive = this.onAddPriceActive.bind(this);
     }
 
     showEditPrice(price){
         this.props.dispatch(editPrice(price,true));
     }
-   /* onAddPriceActive(active) {
-        this.props.dispatch(addPriceActive(active));
-
-    }*/
+   onAddPriceActive(active) {
+       this.props.dispatch(editPrice(null,false));
+    }
 
     savePrice(price) {
-        this.props.dispatch(savePrice(price));
+        var isNewPrice = false;
+        this.props.dispatch(savePrice(price,isNewPrice));
         this.props.dispatch(editPrice(price,false));
     }
 
@@ -91,6 +92,7 @@ function mapStateToProps(state) {
     const {isEditPriceActive} = state.pricesData;
     const {id} = state.pricesData;
     const {routeId} = state.pricesData;
+    const {contractorId} = state.pricesData;
 
     return {
         pricesList: pricesList,
@@ -98,7 +100,10 @@ function mapStateToProps(state) {
         admin: admin,
         isEditPriceActive:isEditPriceActive,
         pricesDataAvailable,
-        price: {id:id ,routeId:routeId ,cents: cents, startroute: startroute,endroute:endroute}
+        price: {id:id ,
+            routeId:routeId ,
+            contractorId:contractorId ,
+            cents: cents, startroute: startroute,endroute:endroute}
     }
 }
 

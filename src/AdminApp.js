@@ -45,10 +45,10 @@ class AdminApp extends Component {
         const {loggedIn} = this.props;
         const {admin} = this.props;
         const finance = (pathname==='' || pathname==='finance'|| pathname==='/finance') && loggedIn;
-        const booking = (pathname==='booking'|| pathname==='/booking') && loggedIn;
-        const routes = (pathname==='routes'|| pathname==='/routes') && loggedIn && admin;
-        const contractors = (pathname==='contractors'|| pathname==='/contractors') && loggedIn && admin;
-        const prices = (pathname==='prices'|| pathname==='/prices') && loggedIn && admin;
+        const booking = (pathname===''|| pathname==='/booking') && loggedIn;
+        const routes = (pathname===''|| pathname==='/routes') && loggedIn && admin;
+        const contractors = (pathname===''|| pathname==='/contractors') && loggedIn && admin;
+        const prices = (pathname===''|| pathname==='/prices') && loggedIn;
 
         return (
             <div>

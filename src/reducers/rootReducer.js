@@ -50,6 +50,8 @@ function financeData(state = {
             })
         case RECEIVE_FINANCEDATA:
             return Object.assign({}, state, {
+                contractorIdList:action.contractorIdList,
+                contractor:action.contractor,
                 isFetching: false,
                 paymentList: action.paymentList,
                 transferList: action.transferList,
@@ -131,7 +133,7 @@ function routesData(state = {
             switch (action.updateType){
                 case 'routeid':
                     return Object.assign({}, state, {
-                        routeid: action.value
+                        id: action.value
                     })
                 case 'startroute':
                     return Object.assign({}, state, {

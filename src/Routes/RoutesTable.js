@@ -163,15 +163,6 @@ class RoutesTable extends React.Component {
                     />
 
                     <Column
-                        header={<Cell>Price $US</Cell>}
-                        cell={<EditCellX
-                            data={routesList}
-                            handleChange={this.handleChange}
-                            col="id"
-                            status="status"/>}
-                        width={150}
-                    />
-                    <Column
                         header={<Cell>New Price</Cell>}
                         cell={<ButtonCellUpdate
                             routesList={routesList}

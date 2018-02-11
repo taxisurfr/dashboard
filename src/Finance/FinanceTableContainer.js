@@ -14,6 +14,8 @@ import {
 import PaymentTable from "./PaymentTable";
 import TransferTable from "./TransferTable";
 import SummaryTable from "./SummaryTable";
+import Select from 'react-select';
+import {setContractor} from './actions';
 
 class FinanceTableContainer extends React.Component {
     constructor(props) {
@@ -22,7 +24,7 @@ class FinanceTableContainer extends React.Component {
         this.saveTransfer = this.saveTransfer.bind(this);
         this.transferNameChange = this.transferNameChange.bind(this);
         this.transferAmountChange = this.transferAmountChange.bind(this);
-
+        this.updateContractor = this.updateContractor.bind(this);
     };
 
     onTransfer(active) {
@@ -45,14 +47,26 @@ class FinanceTableContainer extends React.Component {
         dispatch(setTransferAmount(e.target.value));
     }
 
+    updateContractor(e){
+        var contractor = {id:e.id};
+        this.props.dispatch(fetchFinanceDataIfNeeded(this.props.contractor));
+    }
     render() {
         const financeDataAvailable = this.props.financeDataAvailable;
-        if (!financeDataAvailable) this.props.dispatch(fetchFinanceDataIfNeeded());
+        if (!financeDataAvailable) this.props.dispatch(fetchFinanceDataIfNeeded(this.props.contractor));
         return (
             <div>
                 {!financeDataAvailable && <i className="fa fa-spinner fa-spin fa-3x fa-fw"></i>}
                 {financeDataAvailable &&
                 <div>
+                    <form>
+                    <Select
+                        name="form-field-name-contractor-name"
+                        value={this.props.contractor.name}
+                        options={this.props.contractorIdList}
+                        onChange={(e) => this.updateContractor(e)}
+                    />
+                    </form>
                     <PaymentTable paymentList={this.props.paymentList}
                                   onCancel={this.props.onCancelBookingClick}/>
                     < TransferTable
@@ -84,7 +98,10 @@ FinanceTableContainer.propTypes = {
 }
 
 function mapStateToProps(state) {
+    const {contractorIdList} = state.financeData;
+    const {contractor} = state.financeData;
     const {financeDataAvailable} = state.financeData;
+    const {contractors} = state.financeData;
     const {paymentList} = state.financeData;
     const {transferList} = state.financeData;
     const {summaryList} = state.financeData;
@@ -100,6 +117,8 @@ function mapStateToProps(state) {
     }
 
     return {
+        contractorIdList:contractorIdList,
+        contractor:contractor? contractor : {id:null},
         isFetching: false,
         paymentList: paymentList,
         transferList: transferList,
