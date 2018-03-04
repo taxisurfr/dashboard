@@ -12,7 +12,7 @@ const TextCell = ({rowIndex, data, col, ...props}) => (
 );
 const LinkCell = ({rowIndex, data, col, ...props}) => (
     <Cell {...props}>
-        <a href={'https://taxisurfr-taxisurfr.rhcloud.com/rest/api/form?id='+data.getObjectAt(rowIndex)[col]}>booking form</a>
+        <a href={'https://server-taxisurfr1.b9ad.pro-us-east-1.openshiftapps.com/rest/api/form?id='+data.getObjectAt(rowIndex)[col]}>booking form</a>
     </Cell>
 );
 
