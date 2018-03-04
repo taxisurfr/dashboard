@@ -36,6 +36,7 @@ function pricesData(state = {
                 pricesList: action.pricesList,
                 locations: action.locationList,
                 pricesDataAvailable: true,
+                contractors: action.contractors,
                 admin: action.admin
             })
         case PRICESDATA_DIRTY:
@@ -61,6 +62,10 @@ function pricesData(state = {
                     return Object.assign({}, state, {
                         cents: action.value
                     })
+                case 'contractor':
+                    return Object.assign({}, state, {
+                        newcontractorId: action.value
+                    })
             }
 
         case RESET_PRICESDATA:
@@ -73,10 +78,9 @@ function pricesData(state = {
                 return Object.assign({}, state, {
                     isEditPriceActive: action.isEditPriceActive,
                     id: action.price.id,
-                    routeId: action.price.route.id,
                     contractorId: action.price.contractor ? action.price.contractor.id : null,
-                    startroute: action.price.route.startroute,
-                    endroute: action.price.route.endroute,
+                    startroute: action.price.startroute,
+                    endroute: action.price.endroute,
                     cents: action.price.cents
                 })
             } else {

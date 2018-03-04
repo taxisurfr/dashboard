@@ -67,6 +67,7 @@ class PriceTableContainer extends React.Component {
                     showNewPrice={this.showNewPrice}
                     price={this.props.price}
                     isEditPriceActive={this.props.isEditPriceActive}
+                    contractors={this.props.contractors}
                     showEditPrice={this.showEditPrice}
                 />}
             </div>
@@ -93,6 +94,8 @@ function mapStateToProps(state) {
     const {id} = state.pricesData;
     const {routeId} = state.pricesData;
     const {contractorId} = state.pricesData;
+    const {newcontractorId} = state.pricesData;
+    const {contractors} = state.pricesData;
 
     return {
         pricesList: pricesList,
@@ -100,9 +103,11 @@ function mapStateToProps(state) {
         admin: admin,
         isEditPriceActive:isEditPriceActive,
         pricesDataAvailable,
+        contractors,
         price: {id:id ,
             routeId:routeId ,
             contractorId:contractorId ,
+            newcontractorId:newcontractorId ,
             cents: cents, startroute: startroute,endroute:endroute}
     }
 }

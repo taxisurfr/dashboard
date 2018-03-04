@@ -14,13 +14,18 @@ const TextCell = ({rowIndex, data, col, ...props}) => (
 );
 const StartTextCell = ({rowIndex, data, col, ...props}) => (
     <Cell {...props}>
-        {data.getObjectAt(rowIndex)[col].startroute}
+        {data.getObjectAt(rowIndex)[col].name}
     </Cell>
 );
 
 const EndTextCell = ({rowIndex, data, col, ...props}) => (
     <Cell {...props}>
-        {data.getObjectAt(rowIndex)[col].endroute}
+        {data.getObjectAt(rowIndex)[col].name}
+    </Cell>
+);
+const ContractorCell = ({rowIndex, data, col, ...props}) => (
+    <Cell {...props}>
+        {data.getObjectAt(rowIndex)[col].name}
     </Cell>
 );
 const LinkCell = ({rowIndex, data, col, ...props}) => (
@@ -48,6 +53,7 @@ class ButtonCellUpdate extends React.Component {
     render() {
         const {rowIndex} = this.props;
         const {pricesList} = this.props;
+        const {contractors} = this.props;
         const price = pricesList.getObjectAt(rowIndex);
         return (
             <Button
@@ -90,6 +96,7 @@ class PriceTable extends React.Component {
                 showNewPrice={this.props.showNewPrice}
                 price={this.props.price}
                 locations={this.props.locations}
+                contractors={this.props.contractors}
                 isEditPriceActive={this.props.isEditPriceActive}
             /></div>}
             <form>
@@ -105,13 +112,13 @@ class PriceTable extends React.Component {
                     <Column
                         fixed={true}
                         header={<Cell>Start</Cell>}
-                        cell={<StartTextCell data={pricesList} col="route"/>}
+                        cell={<StartTextCell data={pricesList} col="startroute"/>}
                         width={200}
                     />
                     <Column
                         fixed={true}
                         header={<Cell>End</Cell>}
-                        cell={<EndTextCell data={pricesList} col="route"/>}
+                        cell={<EndTextCell data={pricesList} col="endroute"/>}
                         width={200}
                     />
                     <Column
@@ -120,10 +127,17 @@ class PriceTable extends React.Component {
                         cell={<TextCell data={pricesList} col="cents"/>}
                         width={200}
                     />
+                    {admin && <Column
+                        fixed={true}
+                        header={<Cell>Contractor</Cell>}
+                        cell={<ContractorCell data={pricesList} col="contractor"/>}
+                        width={200}
+                    />}
                     <Column
                         header={<Cell>Save</Cell>}
                         cell={<ButtonCellUpdate
                             pricesList={pricesList}
+                            contractors={this.contractors}
                             onClick={this.props.showEditPrice}
                             col="id"
                             status="status"/>}

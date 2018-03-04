@@ -49,7 +49,7 @@ class FinanceTableContainer extends React.Component {
 
     updateContractor(e){
         var contractor = {id:e.id};
-        this.props.dispatch(fetchFinanceDataIfNeeded(this.props.contractor));
+        this.props.dispatch(fetchFinanceDataIfNeeded(e));
     }
     render() {
         const financeDataAvailable = this.props.financeDataAvailable;

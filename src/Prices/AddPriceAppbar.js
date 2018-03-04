@@ -3,7 +3,7 @@ import Appbar from 'muicss/lib/react/appbar';
 import {Button} from 'react-bootstrap';
 
 import 'react-select/dist/react-select.css';
-import AddPriceDialog from "./EditPriceDialog";
+import EditPriceDialog from "./EditPriceDialog";
 
 class AddPriceAppbar extends Component {
     constructor(props) {
@@ -27,12 +27,13 @@ class AddPriceAppbar extends Component {
         return (
             <Appbar >
 
-                {this.props.isEditPriceActive && <AddPriceDialog
+                {this.props.isEditPriceActive && <EditPriceDialog
                     savePrice={this.props.savePrice}
                     updatePrice={this.props.updatePrice}
                     updatePriceFromSelect={this.props.updatePriceFromSelect}
                     onAddPriceActive={this.props.onAddPriceActive}
                     price={this.props.price}
+                    contractors={this.props.contractors}
                     locations={this.props.locations}
                 />}
 

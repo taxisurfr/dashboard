@@ -58,7 +58,8 @@ function receivePricesData(json) {
         type: RECEIVE_PRICESDATA,
         pricesList: new TableStore(json.prices),
         locationList: json.locations,
-        admin: json.admin
+        admin: json.admin,
+        contractors: json.contractors
     }
 }
 
@@ -101,7 +102,8 @@ function addPriceOnServer(price,isNew) {
         endroute: price.endroute,
         routeId: price.routeId,
         cents: price.cents,
-        contractorId: price.contractorId
+        contractorId: price.contractorId,
+        newcontractorId: price.newcontractorId
     });
 
     return dispatch => {

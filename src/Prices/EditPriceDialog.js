@@ -6,6 +6,8 @@ import Select from 'react-select';
 class EditPriceDialog extends Component {
 
     render(){
+        var options=[{value: 'select'}, {value: 'other'}];
+        const contractors=this.props.contractors;
         return <Modal.Dialog>
             <Modal.Header>
                 <Modal.Title>Add start route</Modal.Title>
@@ -15,19 +17,28 @@ class EditPriceDialog extends Component {
                 <form>
                     <FormGroup>
                         <FormControl type="text" disable="true"
-                                     value={this.props.price.startroute}
+                                     value={this.props.price.startroute.name}
                         />
-                    </FormGroup>
-                    <FormGroup>
                         <FormControl type="text" disable="true"
-                                     value={this.props.price.endroute}
+                                     value={this.props.price.endroute.name}
                         />
-                    </FormGroup>
-                    <FormGroup>
                         <FormControl type="text" placeholder="cents"
                                      value={this.props.price.cents}
                                      onChange={(e) => this.props.updatePrice('cents', e)}
                         />
+                        <FormControl
+                            componentClass="select"
+                            onChange={(e) => this.props.updatePrice('contractor', e)}
+                            placeholder="contractor">
+                            {
+                                contractors.map((contractor, index) => {
+                                    return (<option
+                                        key={index}
+                                        value={contractor.id}>{contractor.name}
+                                        </option>)
+                                })
+                            }
+                        </FormControl>
                     </FormGroup>
                 </form>
             </Modal.Body>

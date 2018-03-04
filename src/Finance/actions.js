@@ -48,25 +48,22 @@ export function setTransferAmount(transferAmount) {
 }
 
 
+
 function fetchFinanceData(contractor) {
-    console.log('fetchFinanceData');
+    var body = JSON.stringify({
+        id: contractor.id
+    });
 
     return dispatch => {
-        dispatch(requestFinanceData());
-        var body = JSON.stringify({
-            cents: 22,
-            description: 'description'
-
-        });
-        fetch(getUrl('finance'), getOptions('POST',body))
+        fetch(getUrl('finance'), getMethod('POST',body))
             .then((response) => response.json())
             .then((responseJson) => dispatch(receiveFinanceData(responseJson)))
             .catch((error) => {
                 console.error(error);
             });
+
     }
 }
-
 
 function shouldFetchFinanceData(state) {
     const financeData = state.financeData
