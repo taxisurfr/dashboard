@@ -77,7 +77,6 @@ class PriceTableContainer extends React.Component {
 
 
 PriceTableContainer.propTypes = {
-    pricesList: PropTypes.object.isRequired,
     pricesDataAvailable: PropTypes.bool.isRequired
 }
 
