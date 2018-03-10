@@ -4,7 +4,7 @@ import {getMethod,getOptions,getUrl} from '../util/network';
 
 
 export const LOGINLOGOUT = 'LOGINLOGOUT'
-export const ISADMIN = 'ISADMIN'
+export const RECEIVE_CONTRACTOR_VALIDATION = 'RECEIVE_CONTRACTOR_VALIDATION'
 
 export function loginLogoutWithToken(loggedIn) {
     return {
@@ -15,9 +15,10 @@ export function loginLogoutWithToken(loggedIn) {
 
 export function receiveLoginDetails(json) {
     return {
-        type: ISADMIN,
+        type: RECEIVE_CONTRACTOR_VALIDATION,
         loginName:json.loginName,
-        admin:json.admin
+        admin:json.admin,
+        validated: json.validated
     }
 }
 

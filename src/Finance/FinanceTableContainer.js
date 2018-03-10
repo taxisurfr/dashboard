@@ -47,10 +47,11 @@ class FinanceTableContainer extends React.Component {
         dispatch(setTransferAmount(e.target.value));
     }
 
-    updateContractor(e){
-        var contractor = {id:e.id};
+    updateContractor(e) {
+        var contractor = {id: e.id};
         this.props.dispatch(fetchFinanceDataIfNeeded(e));
     }
+
     render() {
         const financeDataAvailable = this.props.financeDataAvailable;
         if (!financeDataAvailable) this.props.dispatch(fetchFinanceDataIfNeeded(this.props.contractor));
@@ -60,12 +61,12 @@ class FinanceTableContainer extends React.Component {
                 {financeDataAvailable &&
                 <div>
                     <form>
-                    <Select
-                        name="form-field-name-contractor-name"
-                        value={this.props.contractor.name}
-                        options={this.props.contractorIdList}
-                        onChange={(e) => this.updateContractor(e)}
-                    />
+                        {this.props.admin && <Select
+                            name="form-field-name-contractor-name"
+                            value={this.props.contractor.name}
+                            options={this.props.contractorIdList}
+                            onChange={(e) => this.updateContractor(e)}
+                        />}
                     </form>
                     <PaymentTable paymentList={this.props.paymentList}
                                   onCancel={this.props.onCancelBookingClick}/>
@@ -117,8 +118,8 @@ function mapStateToProps(state) {
     }
 
     return {
-        contractorIdList:contractorIdList,
-        contractor:contractor? contractor : {id:null},
+        contractorIdList: contractorIdList,
+        contractor: contractor ? contractor : {id: null},
         isFetching: false,
         paymentList: paymentList,
         transferList: transferList,

@@ -7,7 +7,6 @@ import About from './About/About';
 import Contact from './Contact/Contact';
 import FinanceTableContainer from './Finance/Finance';
 import Booking from './Booking/Booking';
-import Routes from './Routes/Routes';
 import logo from './logo.svg';
 import {
     loginLogoutWithToken,
@@ -44,11 +43,13 @@ class AdminApp extends Component {
         const {pathname} = this.props.location;
         const {loggedIn} = this.props;
         const {admin} = this.props;
-        const finance = (pathname==='' || pathname==='finance'|| pathname==='/finance') && loggedIn;
-        const booking = (pathname===''|| pathname==='/booking') && loggedIn;
-        const routes = (pathname===''|| pathname==='/routes') && loggedIn && admin;
-        const contractors = (pathname===''|| pathname==='/contractors') && loggedIn && admin;
-        const prices = (pathname===''|| pathname==='/prices') && loggedIn;
+        const {loginName} = this.props;
+        const {validated} = this.props;
+        const finance = (pathname==='' || pathname==='finance'|| pathname==='/finance') && validated;
+        const booking = (pathname===''|| pathname==='/booking') && validated;
+        const routes = (pathname===''|| pathname==='/routes') && validated && admin;
+        const contractors = (pathname===''|| pathname==='/contractors') && validated && admin;
+        const prices = (pathname===''|| pathname==='/prices') && validated;
 
         return (
             <div>
@@ -57,11 +58,11 @@ class AdminApp extends Component {
                     loginName={this.props.loginName}
                     login={this.login}
                     logout={this.logout}
+                    validated={this.props.validated}
                     admin={this.props.admin}
                 />
                 {finance && <FinanceTableContainer/>}
                 {booking && <Booking/>}
-                {routes && <Routes/>}
                 {contractors && <Contractors/>}
                 {prices && <Prices/>}
 
@@ -79,11 +80,13 @@ AdminApp.propTypes = {
 function mapStateToProps(state) {
     const loggedIn = state.financeData.loggedIn;
     const {loginName} = state.financeData;
+    const {validated} = state.financeData;
     const {admin} = state.financeData;
     return {
         loginName,
         loggedIn,
-        admin
+        admin,
+        validated
     }
 }
 

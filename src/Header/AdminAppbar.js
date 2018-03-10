@@ -23,13 +23,13 @@ class AdminAppbar extends Component {
             color: 'white',
             fontSize: 24
         }
-        const {loggedIn,login,logout} = this.props;
+        const {loggedIn,login,logout,validated} = this.props;
         return (
             <Appbar style={clr}>
                 <table width="100%">
                     <tbody>
                     <tr style={s1}>
-                        {loggedIn &&<td><Links admin={this.props.admin}/></td>}
+                        {loggedIn &&<td><Links admin={this.props.admin} validated={validated}/></td>}
                        {/* {admin && <Select
                             name="form-field-name-contractor-name"
                             value={this.props.contractorName}

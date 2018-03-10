@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router';
-import {Label} from "react-bootstrap";
 
 class Links extends Component {
 
@@ -8,11 +7,10 @@ class Links extends Component {
         return (
 
             <nav>
-                <Link className="mui--text-headline" to="finance">Finance</Link>
-                <Link className="mui--text-headline" to="prices">Price</Link>
-                <Link className="mui--text-headline" to="booking">Booking</Link>
-                {this.props.admin && <Link className="mui--text-headline" to="routes">Routes</Link>}
-                {this.props.admin && <Link className="mui--text-headline" to="contractors">Contractors</Link>}
+                {this.props.validated && <Link className="mui--text-headline" to="finance">Finance</Link>}
+                {this.props.validated && <Link className="mui--text-headline" to="prices">Price</Link>}
+                {this.props.validated && <Link className="mui--text-headline" to="booking">Booking</Link>}
+                {this.props.validated && this.props.admin && <Link className="mui--text-headline" to="contractors">Contractors</Link>}
             </nav>)
     }
 }

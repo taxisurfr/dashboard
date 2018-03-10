@@ -12,7 +12,7 @@ import {
     UPDATE_NEW_ROUTESDATA, SHOW_ADD_PRICE_STATUS_CHANGE, UPDATE_PRICE_ON_ROUTE_DATA
 } from '../Routes/actions';
 import {
-    ISADMIN,
+    RECEIVE_CONTRACTOR_VALIDATION,
     LOGINLOGOUT
 } from '../Header/actions';
 
@@ -41,12 +41,13 @@ function financeData(state = {
             return Object.assign({}, state, {
                 loggedIn: action.loggedIn,
                 loginName: action.loginName,
-                admin: action.admin
+                admin: action.admin,
             })
-        case ISADMIN:
+        case RECEIVE_CONTRACTOR_VALIDATION:
             return Object.assign({}, state, {
                 admin: action.admin,
-                loginName: action.loginName
+                loginName: action.loginName,
+                validated : action.validated
             })
         case RECEIVE_FINANCEDATA:
             return Object.assign({}, state, {
