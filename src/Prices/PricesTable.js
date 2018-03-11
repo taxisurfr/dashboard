@@ -6,6 +6,7 @@ import {Table, Column, Cell} from 'fixed-data-table';
 import Input from 'muicss/lib/react/input';
 import {Field, reduxForm} from 'redux-form';
 import AddPriceAppbar from "./AddPriceAppbar";
+import EditPriceDialog from "./EditPriceDialog";
 
 const TextCell = ({rowIndex, data, col, ...props}) => (
     <Cell {...props}>
@@ -87,19 +88,30 @@ class PriceTable extends React.Component {
         const p = this.props.pricesList === null ? null : this.props.pricesList.getObjectAt(0);
         return (
             <div>
-            {admin &&<div><AddPriceAppbar
-                savePrice={this.props.savePrice}
-                updatePrice={this.props.updatePrice}
-                updatePriceFromSelect={this.props.updatePriceFromSelect}
-                onAddPriceActive={this.props.onAddPriceActive}
-                isAddPriceActive={this.props.isAddPriceActive}
-                showNewPrice={this.props.showNewPrice}
-                price={this.props.price}
-                locations={this.props.locations}
-                contractors={this.props.contractors}
-                isEditPriceActive={this.props.isEditPriceActive}
-            /></div>}
-            <form>
+
+                {this.props.isEditPriceActive && <EditPriceDialog
+                    savePrice={this.props.savePrice}
+                    updatePrice={this.props.updatePrice}
+                    updatePriceFromSelect={this.props.updatePriceFromSelect}
+                    onAddPriceActive={this.props.onAddPriceActive}
+                    price={this.props.price}
+                    contractors={this.props.contractors}
+                    locations={this.props.locations}
+                />}
+
+                {admin &&<div><AddPriceAppbar
+                    savePrice={this.props.savePrice}
+                    updatePrice={this.props.updatePrice}
+                    updatePriceFromSelect={this.props.updatePriceFromSelect}
+                    onAddPriceActive={this.props.onAddPriceActive}
+                    isAddPriceActive={this.props.isAddPriceActive}
+                    showNewPrice={this.props.showNewPrice}
+                    price={this.props.price}
+                    locations={this.props.locations}
+                    contractors={this.props.contractors}
+                    isEditPriceActive={this.props.isEditPriceActive}
+                /></div>}
+                <form>
 
                 <Table
                     rowHeight={30}

@@ -27,16 +27,6 @@ class AddPriceAppbar extends Component {
         return (
             <Appbar >
 
-                {this.props.isEditPriceActive && <EditPriceDialog
-                    savePrice={this.props.savePrice}
-                    updatePrice={this.props.updatePrice}
-                    updatePriceFromSelect={this.props.updatePriceFromSelect}
-                    onAddPriceActive={this.props.onAddPriceActive}
-                    price={this.props.price}
-                    contractors={this.props.contractors}
-                    locations={this.props.locations}
-                />}
-
                 <table width="100%" className="mui--appbar-height mui--pull-left">
                     <tbody>
                     <tr style={s1}>
