@@ -47,7 +47,7 @@ class EditPriceDialog extends Component {
 
 
                 <Button bsStyle="primary"
-                        onClick={() => this.props.savePrice(this.props.price)}>
+                        onClick={() => this.props.savePrice(this.props.price,false)}>
                     Save price</Button>
                 <Button bsStyle="primary"
                         onClick={() => this.props.onAddPriceActive(false)}>

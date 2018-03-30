@@ -23,6 +23,7 @@ class AddPriceAppbar extends Component {
     render() {
 
         const s1 = {verticalAlign: 'middle'};
+        var {admin} = this.props;
 
         return (
             <Appbar >
@@ -34,9 +35,9 @@ class AddPriceAppbar extends Component {
                             <h1>Edit price</h1>
                         </td>
                         <td>
-                            {/*<Button
+                            {admin && <Button
                                 onClick={() => this.props.showNewPrice()}>
-                                Add Price</Button>*/}
+                                Add Price</Button>}
                         </td>
 
                     </tr>

@@ -10,6 +10,7 @@ export const RESET_PRICESDATA = 'RESET_PRICESDATA'
 export const ADD_START_ROUTE_STATUS_CHANGE = 'ADD_START_ROUTE_STATUS_CHANGE'
 export const SHOW_EDIT_PRICE = 'SHOW_EDIT_PRICE'
 export const UPDATE_NEW_PRICESDATA = 'UPDATE_NEW_PRICESDATA'
+export const SHOW_NEW_PRICE = 'SHOW_NEW_PRICE'
 
 export function updatePriceValue(type,value) {
     return {
@@ -24,6 +25,12 @@ export function editPrice(price,show) {
         isEditPriceActive:show,
         type: SHOW_EDIT_PRICE,
         price: price
+    }
+}
+export function newPrice(price,show) {
+    return {
+        isNewPriceActive: show,
+        type: SHOW_NEW_PRICE
     }
 }
 
@@ -96,15 +103,24 @@ export function savePrice(price,isNew) {
 }
 
 function addPriceOnServer(price,isNew) {
-    var body = JSON.stringify({
+
+    var body = isNew ? JSON.stringify({
         newPrice: isNew,
-        startroute: price.startroute,
-        endroute: price.endroute,
-        routeId: price.routeId,
+        startrouteId: price.startroute,
+        endrouteId: price.endroute,
         cents: price.cents,
         contractorId: price.contractorId,
         newcontractorId: price.newcontractorId
-    });
+    })
+    : JSON.stringify({
+            newPrice: isNew,
+            startrouteId: price.startroute.id,
+            endrouteId: price.endroute.id,
+            cents: price.cents,
+            contractorId: price.contractorId,
+            newcontractorId: price.newcontractorId
+        })
+    ;
 
     return dispatch => {
         fetch(getUrl('updatecreateprice'), getMethod('POST',body))
@@ -113,7 +129,6 @@ function addPriceOnServer(price,isNew) {
             .catch((error) => {
                 console.error(error);
             });
-
     }
 }
 

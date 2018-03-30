@@ -5,7 +5,7 @@ import {
     RESET_PRICESDATA,
     UPDATE_NEW_PRICESDATA
 } from '../Prices/actions';
-import {PRICESDATA_DIRTY, SHOW_EDIT_PRICE} from "./actions";
+import {PRICESDATA_DIRTY, SHOW_EDIT_PRICE, SHOW_NEW_PRICE} from "./actions";
 
 function emprty_price() {
     return {
@@ -88,7 +88,10 @@ function pricesData(state = {
                     isEditPriceActive: action.isEditPriceActive,
                 })
             }
-
+        case SHOW_NEW_PRICE:
+                return Object.assign({}, state, {
+                    isNewPriceActive: action.isNewPriceActive,
+                })
         default:
             return state
     }

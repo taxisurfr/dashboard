@@ -7,6 +7,7 @@ import Input from 'muicss/lib/react/input';
 import {Field, reduxForm} from 'redux-form';
 import AddPriceAppbar from "./AddPriceAppbar";
 import EditPriceDialog from "./EditPriceDialog";
+import NewPriceDialog from "./NewPriceDialog";
 
 const TextCell = ({rowIndex, data, col, ...props}) => (
     <Cell {...props}>
@@ -99,13 +100,24 @@ class PriceTable extends React.Component {
                     locations={this.props.locations}
                 />}
 
+                {this.props.isNewPriceActive && <NewPriceDialog
+                    savePrice={this.props.savePrice}
+                    updatePrice={this.props.updatePrice}
+                    updatePriceFromSelect={this.props.updatePriceFromSelect}
+                    onNewPriceActive={this.props.onNewPriceActive}
+                    price={this.props.price}
+                    contractors={this.props.contractors}
+                    locations={this.props.locations}
+                />}
                 {admin &&<div><AddPriceAppbar
                     savePrice={this.props.savePrice}
                     updatePrice={this.props.updatePrice}
                     updatePriceFromSelect={this.props.updatePriceFromSelect}
                     onAddPriceActive={this.props.onAddPriceActive}
-                    isAddPriceActive={this.props.isAddPriceActive}
+                    isNewPriceActive={this.props.isNewPriceActive}
+                    showEditPrice={this.props.showEditPrice}
                     showNewPrice={this.props.showNewPrice}
+                    admin={admin}
                     price={this.props.price}
                     locations={this.props.locations}
                     contractors={this.props.contractors}

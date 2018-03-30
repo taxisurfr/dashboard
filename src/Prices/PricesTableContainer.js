@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {
-    addNewPriceActive, editPrice, fetchPriceDataIfNeeded, savePrice, updatePrice,
+    addNewPriceActive, editPrice, newPrice, fetchPriceDataIfNeeded, savePrice, updatePrice,
     updatePriceValue
 } from './actions';
 import PriceTable from "./PricesTable";
@@ -13,18 +13,28 @@ class PriceTableContainer extends React.Component {
         this.updatePrice = this.updatePrice.bind(this);
         this.updatePriceFromSelect = this.updatePriceFromSelect.bind(this);
         this.showEditPrice = this.showEditPrice.bind(this);
+        this.showNewPrice = this.showNewPrice.bind(this);
         this.onAddPriceActive = this.onAddPriceActive.bind(this);
+        this.onNewPriceActive = this.onNewPriceActive.bind(this);
     }
 
     showEditPrice(price){
         this.props.dispatch(editPrice(price,true));
     }
-   onAddPriceActive(active) {
+
+    showNewPrice(price){
+        this.props.dispatch(newPrice(price,true));
+    }
+
+    onAddPriceActive(active) {
        this.props.dispatch(editPrice(null,false));
     }
 
-    savePrice(price) {
-        var isNewPrice = false;
+    onNewPriceActive(active) {
+        this.props.dispatch(newPrice(null,false));
+    }
+
+    savePrice(price,isNewPrice) {
         this.props.dispatch(savePrice(price,isNewPrice));
         this.props.dispatch(editPrice(price,false));
     }
@@ -64,9 +74,11 @@ class PriceTableContainer extends React.Component {
                     updatePrice={this.updatePrice}
                     updatePriceFromSelect={this.updatePriceFromSelect}
                     onAddPriceActive={this.onAddPriceActive}
+                    onNewPriceActive={this.onNewPriceActive}
                     showNewPrice={this.showNewPrice}
                     price={this.props.price}
                     isEditPriceActive={this.props.isEditPriceActive}
+                    isNewPriceActive={this.props.isNewPriceActive}
                     contractors={this.props.contractors}
                     showEditPrice={this.showEditPrice}
                 />}
@@ -90,6 +102,7 @@ function mapStateToProps(state) {
     const {endroute} = state.pricesData;
     const {cents} = state.pricesData;
     const {isEditPriceActive} = state.pricesData;
+    const {isNewPriceActive} = state.pricesData;
     const {id} = state.pricesData;
     const {routeId} = state.pricesData;
     const {contractorId} = state.pricesData;
@@ -101,6 +114,7 @@ function mapStateToProps(state) {
         locations: locations,
         admin: admin,
         isEditPriceActive:isEditPriceActive,
+        isNewPriceActive:isNewPriceActive,
         pricesDataAvailable,
         contractors,
         price: {id:id ,
