@@ -46,7 +46,10 @@ class PriceTableContainer extends React.Component {
 
     updatePrice(type, event) {
         if (event) {
-            const value = event.target.value;
+            var value = event.target.value;
+            if ('contractor'===type){
+                value = {id:value};
+            }
             this.props.dispatch(updatePriceValue(type, value));
         }
     }
@@ -77,6 +80,7 @@ class PriceTableContainer extends React.Component {
                     onNewPriceActive={this.onNewPriceActive}
                     showNewPrice={this.showNewPrice}
                     price={this.props.price}
+                    cents={this.props.cents}
                     isEditPriceActive={this.props.isEditPriceActive}
                     isNewPriceActive={this.props.isNewPriceActive}
                     contractors={this.props.contractors}
@@ -98,16 +102,12 @@ function mapStateToProps(state) {
     const {locations} = state.pricesData;
     const {admin} = state.pricesData;
     const {price} = state.pricesData;
-    const {startroute} = state.pricesData;
-    const {endroute} = state.pricesData;
-    const {cents} = state.pricesData;
     const {isEditPriceActive} = state.pricesData;
     const {isNewPriceActive} = state.pricesData;
     const {id} = state.pricesData;
-    const {routeId} = state.pricesData;
-    const {contractorId} = state.pricesData;
-    const {newcontractorId} = state.pricesData;
+    const {contractorId} = state.financeData;
     const {contractors} = state.pricesData;
+    const cents = state.pricesData.price ? state.pricesData.price.cents : null;
 
     return {
         pricesList: pricesList,
@@ -117,11 +117,9 @@ function mapStateToProps(state) {
         isNewPriceActive:isNewPriceActive,
         pricesDataAvailable,
         contractors,
-        price: {id:id ,
-            routeId:routeId ,
-            contractorId:contractorId ,
-            newcontractorId:newcontractorId ,
-            cents: cents, startroute: startroute,endroute:endroute}
+        contractorId,
+        price,
+        cents
     }
 }
 

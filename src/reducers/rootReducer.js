@@ -47,7 +47,8 @@ function financeData(state = {
             return Object.assign({}, state, {
                 admin: action.admin,
                 loginName: action.loginName,
-                validated : action.validated
+                validated : action.validated,
+                contractorId: action.contractorId
             })
         case RECEIVE_FINANCEDATA:
             return Object.assign({}, state, {

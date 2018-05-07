@@ -96,8 +96,10 @@ class PriceTable extends React.Component {
                     updatePriceFromSelect={this.props.updatePriceFromSelect}
                     onAddPriceActive={this.props.onAddPriceActive}
                     price={this.props.price}
+                    cents={this.props.cents}
                     contractors={this.props.contractors}
                     locations={this.props.locations}
+                    admin={this.props.admin}
                 />}
 
                 {this.props.isNewPriceActive && <NewPriceDialog
@@ -108,8 +110,9 @@ class PriceTable extends React.Component {
                     price={this.props.price}
                     contractors={this.props.contractors}
                     locations={this.props.locations}
+                    admin={this.props.admin}
                 />}
-                {admin &&<div><AddPriceAppbar
+                {<div><AddPriceAppbar
                     savePrice={this.props.savePrice}
                     updatePrice={this.props.updatePrice}
                     updatePriceFromSelect={this.props.updatePriceFromSelect}
@@ -157,6 +160,12 @@ class PriceTable extends React.Component {
                         cell={<ContractorCell data={pricesList} col="contractor"/>}
                         width={200}
                     />}
+                    <Column
+                        fixed={true}
+                        header={<Cell>Offer</Cell>}
+                        cell={<TextCell data={pricesList} col="id"/>}
+                        width={200}
+                    />
                     <Column
                         header={<Cell>Save</Cell>}
                         cell={<ButtonCellUpdate

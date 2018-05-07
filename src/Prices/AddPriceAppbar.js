@@ -35,9 +35,9 @@ class AddPriceAppbar extends Component {
                             <h1>Edit price</h1>
                         </td>
                         <td>
-                            {admin && <Button
+                            <Button
                                 onClick={() => this.props.showNewPrice()}>
-                                Add Price</Button>}
+                                Add Price</Button>
                         </td>
 
                     </tr>
@@ -47,5 +47,6 @@ class AddPriceAppbar extends Component {
         )
     }
 }
+
 
 export default AddPriceAppbar

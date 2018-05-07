@@ -3,7 +3,7 @@ import {
     REQUEST_PRICESDATA, RECEIVE_PRICESDATA, UPDATE_PRICESDATA,
     SHOW_ADD_PRICE_STATUS_CHANGE,
     RESET_PRICESDATA,
-    UPDATE_NEW_PRICESDATA
+    UPDATE_NEW_PRICESDATA,INIT_PRICE
 } from '../Prices/actions';
 import {PRICESDATA_DIRTY, SHOW_EDIT_PRICE, SHOW_NEW_PRICE} from "./actions";
 
@@ -44,30 +44,20 @@ function pricesData(state = {
                 pricesDataAvailable: false
             })
         case UPDATE_PRICESDATA:
-            switch (action.updateType) {
+            let copy = Object.assign({}, state);
+            copy.price[action.updateType]= action.value;
+            return copy;
+            /*switch (action.updateType) {
                 case 'price':
                     return Object.assign({}, state, {
                         id: action.value.id,
                         price: action.value.price
                     })
-                case 'startroute':
-                    return Object.assign({}, state, {
-                        startroute: action.value
-                    })
-                case 'endroute':
-                    return Object.assign({}, state, {
-                        endroute: action.value
-                    })
-                case 'cents':
-                    return Object.assign({}, state, {
-                        cents: action.value
-                    })
                 case 'contractor':
                     return Object.assign({}, state, {
                         newcontractorId: action.value
                     })
-            }
-
+            }*/
         case RESET_PRICESDATA:
             return Object.assign({}, state, {
                 isAddPriceActive: true,
@@ -77,11 +67,14 @@ function pricesData(state = {
             if (action.isEditPriceActive) {
                 return Object.assign({}, state, {
                     isEditPriceActive: action.isEditPriceActive,
+/*
                     id: action.price.id,
                     contractorId: action.price.contractor ? action.price.contractor.id : null,
                     startroute: action.price.startroute,
                     endroute: action.price.endroute,
-                    cents: action.price.cents
+                    cents: action.price.cents,
+*/
+                    price: action.price
                 })
             } else {
                 return Object.assign({}, state, {
@@ -92,6 +85,10 @@ function pricesData(state = {
                 return Object.assign({}, state, {
                     isNewPriceActive: action.isNewPriceActive,
                 })
+        case INIT_PRICE:
+            return Object.assign({}, state, {
+                price: {contractor: {id:action.contractorId}}
+            })
         default:
             return state
     }

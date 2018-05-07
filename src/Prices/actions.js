@@ -11,6 +11,7 @@ export const ADD_START_ROUTE_STATUS_CHANGE = 'ADD_START_ROUTE_STATUS_CHANGE'
 export const SHOW_EDIT_PRICE = 'SHOW_EDIT_PRICE'
 export const UPDATE_NEW_PRICESDATA = 'UPDATE_NEW_PRICESDATA'
 export const SHOW_NEW_PRICE = 'SHOW_NEW_PRICE'
+export const INIT_PRICE = 'INIT_PRICE'
 
 export function updatePriceValue(type,value) {
     return {
@@ -19,6 +20,14 @@ export function updatePriceValue(type,value) {
         updateType: type
     }
 }
+
+export function initPrice(value) {
+    return {
+        type: INIT_PRICE,
+        contractorId: value,
+    }
+}
+
 
 export function editPrice(price,show) {
     return {
@@ -109,16 +118,15 @@ function addPriceOnServer(price,isNew) {
         startrouteId: price.startroute,
         endrouteId: price.endroute,
         cents: price.cents,
-        contractorId: price.contractorId,
-        newcontractorId: price.newcontractorId
+        contractorId: price.contractor.id
     })
     : JSON.stringify({
             newPrice: isNew,
             startrouteId: price.startroute.id,
             endrouteId: price.endroute.id,
             cents: price.cents,
-            contractorId: price.contractorId,
-            newcontractorId: price.newcontractorId
+            contractorId: price.contractor.id,
+            id: price.id
         })
     ;
 
@@ -126,6 +134,7 @@ function addPriceOnServer(price,isNew) {
         fetch(getUrl('updatecreateprice'), getMethod('POST',body))
             .then((response) => response.json())
             .then((responseJson) => dispatch(receivePricesData(responseJson)))
+            .then((responseJson) => dispatch(newPrice(null,false)))
             .catch((error) => {
                 console.error(error);
             });

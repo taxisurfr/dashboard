@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
-import {Modal, Button, ControlLabel, FormControl, FormGroup} from 'react-bootstrap';
-import Select from 'react-select';
+import {Button, FormControl, FormGroup, Modal} from 'react-bootstrap';
 
 
 class EditPriceDialog extends Component {
@@ -10,7 +9,7 @@ class EditPriceDialog extends Component {
         const contractors=this.props.contractors;
         return <Modal.Dialog>
             <Modal.Header>
-                <Modal.Title>Add start route</Modal.Title>
+                <Modal.Title>Edit Price</Modal.Title>
             </Modal.Header>
 
             <Modal.Body>
@@ -26,7 +25,7 @@ class EditPriceDialog extends Component {
                                      value={this.props.price.cents}
                                      onChange={(e) => this.props.updatePrice('cents', e)}
                         />
-                        <FormControl
+                        {this.props.admin && <FormControl
                             componentClass="select"
                             onChange={(e) => this.props.updatePrice('contractor', e)}
                             placeholder="contractor">
@@ -38,7 +37,7 @@ class EditPriceDialog extends Component {
                                         </option>)
                                 })
                             }
-                        </FormControl>
+                        </FormControl>}
                     </FormGroup>
                 </form>
             </Modal.Body>
