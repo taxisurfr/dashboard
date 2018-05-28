@@ -89,11 +89,12 @@ export function cancelBooking(bookingId) {
     }
 }
 
-export function saveTransferOnServer(cents,description) {
+export function saveTransferOnServer(cents,contractorId, description) {
     util.inspect(cents, { showHidden: true, depth: null });
     util.inspect(description, { showHidden: true, depth: null });
     var body = JSON.stringify({
         cents: cents,
+        contractorId: contractorId,
         description: description
 
     });

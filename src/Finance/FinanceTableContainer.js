@@ -34,7 +34,8 @@ class FinanceTableContainer extends React.Component {
 
     saveTransfer() {
         const {dispatch} = this.props;
-        dispatch(saveTransferOnServer(this.props.transferAmount * 100, this.props.transferName));
+        dispatch(saveTransferOnServer(this.props.transferAmount * 100, this.props.contractor.id, this.props.transferName));
+        this.onTransfer(false);
     }
 
     transferNameChange(e) {
