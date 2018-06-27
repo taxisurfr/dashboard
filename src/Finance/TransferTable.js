@@ -18,9 +18,8 @@ const AmtCell = ({rowIndex, data, colAmt, ...props}) => (
     <Cell {...props}>
         <div className="mui--text-right">
             <FormattedNumber
-                value={data.getObjectAt(rowIndex)[colAmt] / 100}
-                style="currency"
-                currency="USD"/>
+                value={data.getObjectAt(rowIndex)[colAmt]}
+                />
         </div>
     </Cell>
 );
@@ -122,8 +121,9 @@ class TransferTable extends React.Component {
                         width={150}
                     />
                     <Column
+                        align='right'
                         fixed={true}
-                        header={<Cell>Amount $US</Cell>}
+                        header={<Cell>Amount LKR</Cell>}
                         cell={<AmtCell data={transferList} colAmt="amount"/>}
                         width={150}
                     />

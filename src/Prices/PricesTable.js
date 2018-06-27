@@ -149,8 +149,9 @@ class PriceTable extends React.Component {
                         width={200}
                     />
                     <Column
+                        align='right'
                         fixed={true}
-                        header={<Cell>Price</Cell>}
+                        header={<Cell>Price LKR</Cell>}
                         cell={<TextCell data={pricesList} col="cents"/>}
                         width={200}
                     />
